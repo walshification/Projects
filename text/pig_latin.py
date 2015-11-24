@@ -7,19 +7,16 @@ def pig_latinate(sentence):
     assert type(sentence) is str, "{} is not a string.".format(sentence)
     p_lat_list = []
     for word in sentence.split():
-        punctuation = ''
-        if word[-1] in string.punctuation:
-            word, punctuation = splunc(word)
-        pig_latin_base = append_cons(word)
-        if pig_latin_base[-1] not in 'aeiou':
-            pig_latin_suffix = 'ay'
+        word, punctuation = splunc(word)
+        if word[0] in 'aeiou':
+            word += 'y'
         else:
-            pig_latin_suffix = 'yay'
-        p_lat_list.append('{}{}{}'.format(pig_latin_base, pig_latin_suffix, punctuation))
+            word = postpend_cons(word)
+        p_lat_list.append('{}ay{}'.format(word, punctuation))
     return ' '.join(p_lat_list)
 
 
-def append_cons(word):
+def postpend_cons(word):
     '''Moves the first consonants of a word to the end of the word.'''
     first_consonants = ''
     for char in word:
@@ -31,18 +28,21 @@ def append_cons(word):
 
 
 def splunc(word):
-    '''Takes in a string and returns a tuple of the word split from its punctuation.'''
+    '''
+    Takes in a string and returns a tuple of the word split from its punctuation.
+    Returns the word and an empty string if no punctuation is present.
+    '''
     puncs, letters = [], []
     [puncs.insert(0, char) if char in string.punctuation else letters.insert(0, char)
      for char in word[::-1]]
     return (''.join(letters), ''.join(puncs))
 
 
-class PigLatinTest(unittest.TestCase):
+class TestPigLatin(unittest.TestCase):
     
     def test_appends_ay_to_words_starting_with_vowels(self):
         translation = pig_latinate('arrow')
-        expected = 'arroway'
+        expected = 'arrowyay'
         self.assertEqual(expected, translation)
 
     def test_appends_starting_consonant_to_end_with_ay(self):
