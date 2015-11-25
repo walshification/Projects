@@ -1,6 +1,6 @@
 import unittest
-from Projects.projects.pig_latin import PigLatin
-from Projects.projects.reverse_a_string import reverse
+from projects.pig_latin import PigLatin
+from projects.reverse_a_string import reverse
 
 
 class TestPigLatin(unittest.TestCase):

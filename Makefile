@@ -1,10 +1,11 @@
 ENV = $(CURDIR)/env
 PYTHON = $(ENV)/bin/python
 
-make: coverage
+make: test
 
-coverage: deps
-	$(ENV)/bin/nose2 --with-coverage
+test: deps
+	$(ENV)/bin/coverage run --source projects -m py.test
+	$(ENV)/bin/coverage report
 
 deps: env
 	$(ENV)/bin/pip install --upgrade pip
@@ -12,3 +13,7 @@ deps: env
 
 env:
 	virtualenv --python=$(shell which python3.4) $(ENV)
+
+clean:
+	rm -rf $(ENV)
+	find . -iname '*.pyc' -exec rm {} \;
