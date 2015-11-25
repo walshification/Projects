@@ -1,7 +1,7 @@
 import unittest
 from projects.pig_latin import PigLatin
 from projects.reverse_a_string import reverse
-
+from projects.fizz_buzz import fizz_buzz_to_one_hundred
 
 class TestPigLatin(unittest.TestCase):
 
@@ -45,3 +45,25 @@ class TestReverse(unittest.TestCase):
         reversed_sentence = reverse(sentence)
         expected = '!wonk uoy ,tseb eht era sracecaR'
         self.assertEqual(reversed_sentence, expected)
+
+
+class TestFizzBuzz(unittest.TestCase):
+
+    def setUp(self):
+        self.resp = fizz_buzz_to_one_hundred()
+
+    def test_returns_fizz_for_multiple_of_three(self):
+        mults_of_3 = [i for i in range(1, 101) if i % 3 == 0]
+        self.assertTrue(all(['Fizz' in self.resp[i-1] for i in mults_of_3]))
+
+    def test_returns_buzz_for_multiples_of_five(self):
+        mults_of_5 = [i for i in range(1, 101) if i % 5 == 0]
+        self.assertTrue(all(['Buzz' in self.resp[i-1] for i in mults_of_5]))
+
+    def test_returns_fizzbuzz_for_multiples_of_three_and_five(self):
+        mults_15 = [i for i in range(1, 101) if i % 15 == 0]
+        self.assertTrue(all(['FizzBuzz' == self.resp[i-1] for i in mults_15]))
+
+    def test_returns_number_for_nonmultiples_of_three_or_five(self):
+        nonmultiples = [i for i in self.resp if type(i) == int]
+        self.assertTrue(all([i % 3 != 0 and i % 5 != 0 for i in nonmultiples]))
