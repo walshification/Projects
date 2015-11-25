@@ -1,11 +1,12 @@
 ENV = $(CURDIR)/env
 PYTHON = $(ENV)/bin/python
+COVERAGE = $(ENV)/bin/coverage
 
 make: test
 
 test: deps
-	$(ENV)/bin/coverage run --source projects -m py.test
-	$(ENV)/bin/coverage report
+	$(COVERAGE) run --source projects -m py.test
+	$(COVERAGE) report -m
 
 deps: env
 	$(ENV)/bin/pip install --upgrade pip
