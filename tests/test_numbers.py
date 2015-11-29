@@ -31,3 +31,7 @@ class TestNumbers(unittest.TestCase):
         primes = [next(prime_num_gen) for i in range(3)]
         expected = [2, 3, 5]
         self.assertEqual(primes, expected)
+
+    def test_primo_sniper_returns_nth_prime_number(self):
+        prime_number = self.num_fun.primo_sniper(42)
+        self.assertEqual(prime_number, 181)
