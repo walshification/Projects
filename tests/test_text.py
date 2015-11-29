@@ -1,12 +1,10 @@
 import unittest
-from projects.pig_latin import PigLatin
-from projects.reverse_a_string import reverse
-from projects.fizz_buzz import fizz_buzz_to_one_hundred
+
+from lib.text import Text
 
 class TestPigLatin(unittest.TestCase):
-
     def setUp(self):
-        self.translator = PigLatin()
+        self.translator = Text()
     
     def test_appends_ay_to_words_starting_with_vowels(self):
         translation = self.translator.pig_latinate('arrow')
@@ -30,27 +28,29 @@ class TestPigLatin(unittest.TestCase):
 
 
 class TestReverse(unittest.TestCase):
+    def setUp(self):
+        self.text_fun = Text()
 
     def test_raises_assertionerror_if_parameter_is_not_string(self):
         with self.assertRaises(AssertionError):
-            reverse(['string'])
+            self.text_fun.reverse(['string'])
 
     def test_any_string(self):
-        new_string = reverse('foo')
+        new_string = self.text_fun.reverse('foo')
         expected = 'oof'
         self.assertEqual(new_string, expected)
 
     def test_reverses_a_sentence_with_punctuation(self):
         sentence = 'Racecars are the best, you know!'
-        reversed_sentence = reverse(sentence)
+        reversed_sentence = self.text_fun.reverse(sentence)
         expected = '!wonk uoy ,tseb eht era sracecaR'
         self.assertEqual(reversed_sentence, expected)
 
 
 class TestFizzBuzz(unittest.TestCase):
-
     def setUp(self):
-        self.resp = fizz_buzz_to_one_hundred()
+        self.text_fun = Text()
+        self.resp = self.text_fun.fizz_buzz_to_one_hundred()
 
     def test_returns_fizz_for_multiple_of_three(self):
         mults_of_3 = [i for i in range(1, 101) if i % 3 == 0]

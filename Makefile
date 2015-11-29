@@ -5,7 +5,7 @@ COVERAGE = $(ENV)/bin/coverage
 make: test
 
 test: deps
-	$(COVERAGE) run --source projects -m py.test
+	$(COVERAGE) run --source lib -m py.test
 	$(COVERAGE) report -m
 
 deps: env
