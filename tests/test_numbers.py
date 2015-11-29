@@ -9,7 +9,6 @@ class TestNumbers(unittest.TestCase):
 
     def test_returns_list_of_n_length(self):
         nums = self.num_fun.listonacci_to(42)
-        print(nums)
         self.assertEqual(len(nums), 42)
 
     def test_fibosniper_returns_just_the_nth_fibo_num(self):
@@ -26,3 +25,9 @@ class TestNumbers(unittest.TestCase):
             coins = self.num_fun.change(2, 1)
         expected = "Hey! That isn't enough!"
         self.assertEqual(e.exception.msg, expected)
+
+    def test_gimme_prime_yields_prime_numbers_from_generator(self):
+        prime_num_gen = self.num_fun.gimme_prime()
+        primes = [next(prime_num_gen) for i in range(3)]
+        expected = [2, 3, 5]
+        self.assertEqual(primes, expected)
