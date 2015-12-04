@@ -35,3 +35,11 @@ class TestNumbers(unittest.TestCase):
     def test_primo_sniper_returns_nth_prime_number(self):
         prime_number = self.num_fun.primo_sniper(42)
         self.assertEqual(prime_number, 181)
+
+    def test_int_to_binary_returns_binary_number_as_str(self):
+        binary = self.num_fun.int_to_binary(8)
+        self.assertEqual(binary, '1000')
+
+    def test_binary_to_int_returns_int_for_binary(self):
+        integer = self.num_fun.binary_to_int('1010')
+        self.assertEqual(integer, 10)

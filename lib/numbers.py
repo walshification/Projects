@@ -1,6 +1,9 @@
+from lib.text import Text
+
+
 class Numbers(object):
     def listonacci_to(self, n):
-        '''Returns a series of Fibonacci numbers from 1 to n.'''
+        """Returns a series of Fibonacci numbers from 1 to n."""
         numbers = []
         i, j = 1, 1
         for number in range(1, n+1):
@@ -9,14 +12,14 @@ class Numbers(object):
         return numbers
 
     def fibosniper(self, n):
-        '''Returns the nth Fibonacci number.'''
+        """Returns the nth Fibonacci number."""
         return self.listonacci_to(n)[-1]
 
     def change(self, cost, pay):
-        '''
+        """
         Returns a dict with the change owed in number of dollars and coins
         based on a cost and payment amount.
-        '''
+        """
         assert (pay - cost) > 0, "Hey! That isn't enough!"
         purse = {1.00: 0, 0.25: 0, 0.10: 0, 0.05: 0, 0.01: 0}
         coins = [1.00, 0.25, 0.10, 0.05, 0.01]
@@ -35,18 +38,44 @@ class Numbers(object):
         while True:
             if i not in sieve:
                 yield i
-                # Capture the squares of primes for subsequent sieving and add the
-                # prime as its value as a starting point for getting multiples.
+                # Capture the squares of primes for subsequent sieving and add
+                # the prime as its value as a starting point for getting
+                # multiples.
                 sieve[i**2] = [i]
             else:
                 for j in sieve[i]:
                     # Add the next multiple of a previous prime with its prime
                     # factor(s) to the sieve.
                     sieve.setdefault(j + i, []).append(j)
-                del sieve[i]  # Remove the sieved multiple as it has been sieved.
+                del sieve[i]  # Remove sieved multiple as it has been sieved.
             i += 1
 
     def primo_sniper(self, n):
-        '''Returns the nth prime number.'''
+        """Returns the nth prime number."""
         prime_num_gen = self.gimme_prime()
         return [next(prime_num_gen) for i in range(n)][-1]
+
+    def binary_to_int(self, binary_string):
+        """Accepts a binary string and returns an integer."""
+        assert type(binary_string) == str, 'Binary arg must be a str.'
+        integer = 0
+        exponent = len(binary_string) - 1
+        for digit in binary_string:
+            if digit == '1':
+                integer += 2**exponent
+            exponent -= 1
+        return integer
+
+    def int_to_binary(self, i):
+        """Accepts a number and converts it to binary as a str."""
+        assert type(i) == int, 'Number must be int.'
+        binary_digits = []
+        while i:
+            i, remainder = self.divide_with_remainder(i, 2)
+            binary_digits.insert(0, str(remainder))
+        return ''.join(binary_digits)
+
+    def divide_with_remainder(self, numerator, denominator):
+        """Returns the dividend of two integers with a remainder."""
+        dividend, remainder = numerator // denominator, numerator % denominator
+        return (dividend, remainder)
