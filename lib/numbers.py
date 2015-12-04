@@ -1,6 +1,3 @@
-from lib.text import Text
-
-
 class Numbers(object):
     def listonacci_to(self, n):
         """Returns a series of Fibonacci numbers from 1 to n."""
@@ -16,8 +13,7 @@ class Numbers(object):
         return self.listonacci_to(n)[-1]
 
     def change(self, cost, pay):
-        """
-        Returns a dict with the change owed in number of dollars and coins
+        """Returns a dict with the change owed in number of dollars and coins
         based on a cost and payment amount.
         """
         assert (pay - cost) > 0, "Hey! That isn't enough!"
@@ -55,15 +51,12 @@ class Numbers(object):
         prime_num_gen = self.gimme_prime()
         return [next(prime_num_gen) for i in range(n)][-1]
 
-    def binary_to_int(self, binary_string):
-        """Accepts a binary string and returns an integer."""
-        assert type(binary_string) == str, 'Binary arg must be a str.'
+    def binary_to_int(self, binary):
+        """Accepts a binary and returns an integer."""
+        assert type(binary) == str, 'Binary must be str.'
         integer = 0
-        exponent = len(binary_string) - 1
-        for digit in binary_string:
-            if digit == '1':
-                integer += 2**exponent
-            exponent -= 1
+        for digit_place, digit in enumerate(binary[::-1]):
+            if digit == '1': integer += 2**digit_place
         return integer
 
     def int_to_binary(self, i):
