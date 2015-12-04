@@ -22,8 +22,8 @@ class TestPigLatin(unittest.TestCase):
         self.assertEqual(expected, translation)
     
     def test_positions_punctuation_correctly(self):
-        translation = self.translator.pig_latinate('foo, bar baz: purple hippo?!')
-        expected = 'oofay, arbay azbay: urplepay ippohay?!'
+        translation = self.translator.pig_latinate('foo, bar baz: hippo?!')
+        expected = 'oofay, arbay azbay: ippohay?!'
         self.assertEqual(expected, translation)
 
 
@@ -67,3 +67,27 @@ class TestFizzBuzz(unittest.TestCase):
     def test_returns_number_for_nonmultiples_of_three_or_five(self):
         nonmultiples = [i for i in self.resp if type(i) == int]
         self.assertTrue(all([i % 3 != 0 and i % 5 != 0 for i in nonmultiples]))
+
+
+class TestVowelCounter(unittest.TestCase):
+    def setUp(self):
+        self.text_fun = Text()
+
+    def test_vowel_count_must_take_a_string(self):
+        with self.assertRaises(AssertionError) as e:
+            self.text_fun.vowel_count(42)
+        expected = 'Sentence argument must be a string.'
+        self.assertEqual(e.exception.msg, expected)
+
+    def test_vowel_count_returns_dict_of_vowels_and_their_counts(self):
+        v_count = self.text_fun.vowel_count('This is my sentence.')
+        expected = {'i': 2, 'e': 3, 'y': 1}
+        self.assertEqual(v_count, expected)
+
+    def test_y_is_vowel_returns_false_for_beginning_y_by_a_vowel(self):
+        resp = self.text_fun.y_is_vowel('yellow', 0)
+        self.assertEqual(resp, False)
+
+    def test_y_is_vowel_returns_true_for_beginning_y_by_a_consonant(self):
+        resp = self.text_fun.y_is_vowel('Ydris', 0)
+        self.assertEqual(resp, True)

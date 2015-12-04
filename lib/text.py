@@ -2,19 +2,21 @@ import string
 
 
 class Text(object):
+    def __init__(self):
+        self.vowels = 'aeiou'
+
     def fizz_buzz_to_one_hundred(self):
-        '''
-        Prints the numbers from 1 to 100, but prints "Fizz" instead of the
-        number for multiples of three, "Buzz" for multiples of five, and "FizzBuzz"
-        for multiples of both three and five.
-        '''
+        """Prints numbers 1 to 100, but prints "Fizz" instead of the
+        number for multiples of three, "Buzz" for multiples of five, and
+        "FizzBuzz" for multiples of both three and five.
+        """
         numbers = []
         for i in range(1, 101):
             numbers.append('Fizz' * (i % 3 == 0) + 'Buzz' * (i % 5 == 0) or i)
         return numbers
 
     def reverse(self, string):
-        '''Accepts a string and returns a new string that is its reverse.'''
+        """Accepts a string and returns its reverse."""
         assert type(string) == str
         chars = []
         for char in string:
@@ -22,7 +24,7 @@ class Text(object):
         return ''.join(chars)
     
     def pig_latinate(self, sentence):
-        '''Translates a string from English into Pig Latin.'''
+        """Translates a string from English into Pig Latin."""
         assert type(sentence) is str, "{} is not a string.".format(sentence)
         p_lat_list = []
         for word in sentence.split():
@@ -36,7 +38,7 @@ class Text(object):
     
     
     def postpend_cons(self, word):
-        '''Moves the first consonants of a word to the end of the word.'''
+        """Moves the first consonants of word to the end of the word."""
         first_consonants = ''
         for char in word:
             if char not in 'aeiou':
@@ -47,11 +49,40 @@ class Text(object):
     
     
     def splunc(self, word):
-        '''
-        Takes in a string and returns a tuple of the word split from its punctuation.
-        Returns the word and an empty string if no punctuation is present.
-        '''
+        """Takes in a string and returns a tuple of the word split from
+        its punctuation. Returns the word and an empty string if no
+        punctuation is present.
+        """
         puncs, letters = [], []
-        [puncs.insert(0, char) if char in string.punctuation else letters.insert(0, char)
-         for char in word[::-1]]
+        for char in word[::-1]:
+            if char in string.punctuation:
+                puncs.insert(0, char)
+            else:
+                letters.insert(0, char)
         return (''.join(letters), ''.join(puncs))
+
+    def vowel_count(self, sentence):
+        """Takes a string and returns a dict with with the string's
+        vowels as keys and their count as values.
+        """
+        assert type(sentence) == str, 'Sentence argument must be a string.'
+        words = sentence.split(' ')
+        count = {}
+        for word in words:
+            for char in word:
+                if char in self.vowels:
+                    count[char] = (count.get(char) or 0) + 1
+                elif char == 'y' and self.y_is_vowel(word, word.index(char)):
+                    count[char] = (count.get(char) or 0) + 1
+        return count
+
+    def y_is_vowel(self, word, y_index):
+        """Returns Boolean if 'y' is used as a vowel or not."""
+        assert type(word) == str, 'Word argument must be a string.'
+        if y_index > 0:
+            return True
+        else:
+            if word[1] in self.vowels:
+                return False
+            else:
+                return True
