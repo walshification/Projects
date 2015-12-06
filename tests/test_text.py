@@ -91,3 +91,20 @@ class TestVowelCounter(unittest.TestCase):
     def test_y_is_vowel_returns_true_for_beginning_y_by_a_consonant(self):
         resp = self.text_fun.y_is_vowel('Ydris', 0)
         self.assertEqual(resp, True)
+
+
+class TestPalindrome(unittest.TestCase):
+    def setUp(self):
+        self.text_fun = Text()
+
+    def test_returns_False_if_not_palindrome(self):
+        resp = self.text_fun.is_palindrome('greg')
+        self.assertEqual(resp, False)
+
+    def test_returns_True_if_palindrom(self):
+        resp = self.text_fun.is_palindrome('racecar')
+        self.assertEqual(resp, True)
+
+    def test_normalizes_case(self):
+        resp = self.text_fun.is_palindrome('Racecar')
+        self.assertEqual(resp, True)

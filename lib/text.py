@@ -86,3 +86,10 @@ class Text(object):
                 return False
             else:
                 return True
+
+    def is_palindrome(self, word):
+        """Returns True or False if word is palindrome or not."""
+        assert type(word) == str, 'Word must be a string.'
+        if word == None or len(word) == 1: return True
+        word = word.lower()
+        return self.is_palindrome(word[1:-1]) if word[0] == word[-1] else False
