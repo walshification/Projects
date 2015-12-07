@@ -1,6 +1,7 @@
 import unittest
+from collections import defaultdict
 
-from lib.text import Text
+from lib.text import Text, Word
 
 class TestPigLatin(unittest.TestCase):
     def setUp(self):
@@ -28,21 +29,14 @@ class TestPigLatin(unittest.TestCase):
 
 
 class TestReverse(unittest.TestCase):
-    def setUp(self):
-        self.text_fun = Text()
-
-    def test_raises_assertionerror_if_parameter_is_not_string(self):
-        with self.assertRaises(AssertionError):
-            self.text_fun.reverse(['string'])
-
     def test_any_string(self):
-        new_string = self.text_fun.reverse('foo')
+        new_string = Word('foo').reverse()
         expected = 'oof'
         self.assertEqual(new_string, expected)
 
     def test_reverses_a_sentence_with_punctuation(self):
         sentence = 'Racecars are the best, you know!'
-        reversed_sentence = self.text_fun.reverse(sentence)
+        reversed_sentence = Word(sentence).reverse()
         expected = '!wonk uoy ,tseb eht era sracecaR'
         self.assertEqual(reversed_sentence, expected)
 
@@ -70,41 +64,39 @@ class TestFizzBuzz(unittest.TestCase):
 
 
 class TestVowelCounter(unittest.TestCase):
-    def setUp(self):
-        self.text_fun = Text()
-
-    def test_vowel_count_must_take_a_string(self):
-        with self.assertRaises(AssertionError) as e:
-            self.text_fun.vowel_count(42)
-        expected = 'Sentence argument must be a string.'
-        self.assertEqual(e.exception.msg, expected)
-
-    def test_vowel_count_returns_dict_of_vowels_and_their_counts(self):
-        v_count = self.text_fun.vowel_count('This is my sentence.')
-        expected = {'i': 2, 'e': 3, 'y': 1}
+    def test_returns_defaultdict_of_vowels_and_their_counts(self):
+        v_count = Word('sentence').count_vowels()
+        expected = defaultdict(int, {'e': 3})
         self.assertEqual(v_count, expected)
 
-    def test_y_is_vowel_returns_false_for_beginning_y_by_a_vowel(self):
-        resp = self.text_fun.y_is_vowel('yellow', 0)
-        self.assertEqual(resp, False)
+    def test_ignores_y_when_it_is_a_consonant(self):
+        v_count = Word('yellow').count_vowels()
+        expected = defaultdict(int, {'e': 1, 'o': 1})
+        self.assertEqual(v_count, expected)
 
-    def test_y_is_vowel_returns_true_for_beginning_y_by_a_consonant(self):
-        resp = self.text_fun.y_is_vowel('Ydris', 0)
-        self.assertEqual(resp, True)
+    def test_includes_beginning_y_when_followed_by_a_consonant(self):
+        v_count = Word('Ydris').count_vowels()
+        expected = defaultdict(int, {'y': 1, 'i': 1})
+        self.assertEqual(v_count, expected)
+
+    def test_y_is_vowel_returns_true_for_nonbeginning_y_letters(self):
+        v_count = Word('dry').count_vowels()
+        expected = defaultdict(int, {'y': 1})
+        self.assertEqual(v_count, expected)
 
 
 class TestPalindrome(unittest.TestCase):
-    def setUp(self):
-        self.text_fun = Text()
-
     def test_returns_False_if_not_palindrome(self):
-        resp = self.text_fun.is_palindrome('greg')
+        word = Word('greg')
+        resp = word.is_palindrome()
         self.assertEqual(resp, False)
 
     def test_returns_True_if_palindrom(self):
-        resp = self.text_fun.is_palindrome('racecar')
+        word = Word('racecar')
+        resp = word.is_palindrome()
         self.assertEqual(resp, True)
 
     def test_normalizes_case(self):
-        resp = self.text_fun.is_palindrome('Racecar')
+        word = Word('Racecar')
+        resp = word.is_palindrome()
         self.assertEqual(resp, True)
