@@ -1,5 +1,5 @@
 import string
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 
 
 class Text(object):
@@ -53,7 +53,7 @@ class Text(object):
                 puncs.insert(0, char)
             else:
                 letters.insert(0, char)
-        return (''.join(letters), ''.join(puncs))
+        return ''.join(letters), ''.join(puncs)
 
 
 class Word(str):
@@ -67,16 +67,9 @@ class Word(str):
             return True
         return Word(word[1:-1]).is_palindrome() if word[0] == word[-1] else False
 
-    def count_vowels(self):
-        """Returns a dict with the word's vowels as keys and count as
-        values.
-        """
-        word = Word(self.lower())
-        count = defaultdict(int)
-        for char in word:
-            if word.is_vowel(char, word.index(char)):
-                count[char] += 1
-        return count
+    def reverse(self):
+        """Returns a copy of a string in reverse."""
+        return Word(self[::-1])
 
     def is_vowel(self, char, char_index):
         """Returns Boolean if the character in a word is a vowel or
@@ -89,6 +82,62 @@ class Word(str):
         else:
             return False
 
-    def reverse(self):
-        """Returns a copy of a string in reverse."""
-        return Word(self[::-1])
+    def iterate(self, sep=None):
+        if sep:
+            return [Word(w) for w in self.split(sep)]
+        else:
+            return [Word(w) for w in list(self)]
+
+    def lower(self):
+        codex = self.maketrans(string.ascii_uppercase, string.ascii_lowercase)
+        return Word(self.translate(codex))
+
+
+class TextCounter(Word):
+    def __init__(self, text):
+        self.text = Word(text)
+        self.words = self.text.iterate(' ')
+        self.word_count = len(self.words)
+        self.characters = self.count_characters()
+        self.vowels = self.count_vowels()
+        self.most_common = self.return_max()
+
+    def count_characters(self):
+        """Returns a dict with the word's characters as keys and their
+        counts as values.
+        """
+        char_count = defaultdict(int)
+        for word in self.words:
+            for char in word.lower().iterate():
+                char_count[char] += 1
+        return char_count
+
+    def count_vowels(self):
+        """Returns a dict with the word's vowels as keys and count as
+        values.
+        """
+        vowel_count = defaultdict(int)
+        words = self.text.lower().iterate(' ')
+        for word in words:
+            for char in word.iterate():
+                if word.is_vowel(char, word.index(char)):
+                    vowel_count[char] += 1
+        return vowel_count
+
+    def return_max(self):
+        """Returns a tuple or tuple of tuples of the most common
+        characters in the text.
+        """
+        sorted_chars = OrderedDict(sorted(self.characters.items(),
+                                          key=lambda k_v: k_v[1],
+                                          reverse=True))
+        most_common_chars = []
+        highest_count = 0
+        for char, count in sorted_chars.items():
+            if count >= highest_count:
+                highest_count = count
+                most_common_chars.append((char, count))
+        if len(most_common_chars) == 1:
+            return most_common_chars[0]
+        else:
+            return most_common_chars

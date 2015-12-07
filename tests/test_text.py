@@ -1,7 +1,7 @@
 import unittest
 from collections import defaultdict
 
-from lib.text import Text, Word
+from lib.text import Text, Word, TextCounter
 
 class TestPigLatin(unittest.TestCase):
     def setUp(self):
@@ -65,22 +65,22 @@ class TestFizzBuzz(unittest.TestCase):
 
 class TestVowelCounter(unittest.TestCase):
     def test_returns_defaultdict_of_vowels_and_their_counts(self):
-        v_count = Word('sentence').count_vowels()
+        v_count = TextCounter('sentence').vowels
         expected = defaultdict(int, {'e': 3})
         self.assertEqual(v_count, expected)
 
     def test_ignores_y_when_it_is_a_consonant(self):
-        v_count = Word('yellow').count_vowels()
+        v_count = TextCounter('yellow').vowels
         expected = defaultdict(int, {'e': 1, 'o': 1})
         self.assertEqual(v_count, expected)
 
     def test_includes_beginning_y_when_followed_by_a_consonant(self):
-        v_count = Word('Ydris').count_vowels()
+        v_count = TextCounter('Ydris').vowels
         expected = defaultdict(int, {'y': 1, 'i': 1})
         self.assertEqual(v_count, expected)
 
     def test_y_is_vowel_returns_true_for_nonbeginning_y_letters(self):
-        v_count = Word('dry').count_vowels()
+        v_count = TextCounter('dry').vowels
         expected = defaultdict(int, {'y': 1})
         self.assertEqual(v_count, expected)
 
@@ -100,3 +100,19 @@ class TestPalindrome(unittest.TestCase):
         word = Word('Racecar')
         resp = word.is_palindrome()
         self.assertEqual(resp, True)
+
+
+class TestTextCounter(unittest.TestCase):
+    def setUp(self):
+        self.tc = TextCounter('This is a sample. Yep! Ygritte\'s still sad.')
+
+    def test_returns_word_count_in_string(self):
+        self.assertEqual(self.tc.word_count, 8)
+
+    def test_most_common_returns_tuple_of_most_common_char_and_count(self):
+        self.assertTrue(self.tc.most_common, ('s', 4))
+
+    def test_most_common_returns_tuple_list_if_more_than_one_most_common(self):
+        self.tc = TextCounter('Hit list')
+        expected = [('i', 2), ('t', 2)]
+        self.assertTrue(all(c in self.tc.most_common for c in expected))
