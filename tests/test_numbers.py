@@ -1,11 +1,11 @@
 import unittest
 
-from lib.numbers import Numbers
+from lib import numbers
 
 
 class TestNumbers(unittest.TestCase):
     def setUp(self):
-        self.num_fun = Numbers()
+        self.num_fun = numbers.Numbers()
 
     def test_returns_list_of_n_length(self):
         nums = self.num_fun.listonacci_to(42)
@@ -43,3 +43,9 @@ class TestNumbers(unittest.TestCase):
     def test_binary_to_int_returns_int_for_binary(self):
         integer = self.num_fun.binary_to_int('1010')
         self.assertEqual(integer, 10)
+
+    def test_loop_factorial(self):
+        self.assertEqual(numbers.loop_factorial(4), 24)
+
+    def test_factorial(self):
+        self.assertEqual(numbers.factorial(5), 120)

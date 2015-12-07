@@ -72,3 +72,17 @@ class Numbers(object):
         """Returns the dividend of two integers with a remainder."""
         dividend, remainder = numerator // denominator, numerator % denominator
         return (dividend, remainder)
+
+
+def loop_factorial(i):
+    multiplier = i - 1
+    while multiplier:
+        i *= multiplier
+        multiplier -= 1
+    return i
+
+
+def factorial(i):
+    if i == 0:
+        return 1
+    return i * factorial(i-1)
