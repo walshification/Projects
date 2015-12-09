@@ -3,10 +3,11 @@ from collections import defaultdict
 
 from lib.text import Text, Word, TextCounter
 
+
 class TestPigLatin(unittest.TestCase):
     def setUp(self):
         self.translator = Text()
-    
+
     def test_appends_ay_to_words_starting_with_vowels(self):
         translation = self.translator.pig_latinate('arrow')
         expected = 'arrowyay'
@@ -21,7 +22,7 @@ class TestPigLatin(unittest.TestCase):
         translation = self.translator.pig_latinate('glove')
         expected = 'oveglay'
         self.assertEqual(expected, translation)
-    
+
     def test_positions_punctuation_correctly(self):
         translation = self.translator.pig_latinate('foo, bar baz: hippo?!')
         expected = 'oofay, arbay azbay: ippohay?!'

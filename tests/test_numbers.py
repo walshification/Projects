@@ -22,7 +22,7 @@ class TestNumbers(unittest.TestCase):
 
     def test_change_complains_if_not_given_enough_money(self):
         with self.assertRaises(AssertionError) as e:
-            coins = self.num_fun.change(2, 1)
+            self.num_fun.change(2, 1)
         expected = "Hey! That isn't enough!"
         self.assertEqual(e.exception.msg, expected)
 

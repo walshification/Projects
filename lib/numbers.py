@@ -56,7 +56,8 @@ class Numbers(object):
         assert type(binary) == str, 'Binary must be str.'
         integer = 0
         for digit_place, digit in enumerate(binary[::-1]):
-            if digit == '1': integer += 2**digit_place
+            if digit == '1':
+                integer += 2**digit_place
         return integer
 
     def int_to_binary(self, i):

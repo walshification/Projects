@@ -16,7 +16,7 @@ class Text(object):
         for i in range(1, 101):
             numbers.append('Fizz' * (i % 3 == 0) + 'Buzz' * (i % 5 == 0) or i)
         return numbers
-    
+
     def pig_latinate(self, sentence):
         """Translates a string from English into Pig Latin."""
         assert type(sentence) is str, "{} is not a string.".format(sentence)
@@ -29,8 +29,7 @@ class Text(object):
                 word = self.postpend_cons(word)
             p_lat_list.append('{}ay{}'.format(word, punctuation))
         return ' '.join(p_lat_list)
-    
-    
+
     def postpend_cons(self, word):
         """Moves the first consonants of word to the end of the word."""
         first_consonants = ''
@@ -40,8 +39,7 @@ class Text(object):
             else:
                 break
         return word[len(first_consonants):] + first_consonants
-    
-    
+
     def splunctuate(self, word):
         """Takes in a string and returns a tuple of the word split from
         its punctuation. Returns the word and an empty string if no
@@ -63,7 +61,7 @@ class Word(str):
     def is_palindrome(self):
         """Returns Boolean if word is palindrome."""
         word = self.lower()
-        if word == None or len(word) == 1:
+        if word is None or len(word) == 1:
             return True
         return Word(word[1:-1]).is_palindrome() if word[0] == word[-1] else False
 
