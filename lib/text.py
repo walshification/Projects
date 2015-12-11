@@ -91,9 +91,16 @@ class Word(str):
         return Word(self.translate(codex))
 
 
-class TextCounter(Word):
-    def __init__(self, text):
-        self.text = Word(text)
+class TextCounter(object):
+    def __init__(self, text=None, file_path=None):
+        if file_path is not None:
+            with open(file_path, 'r') as f:
+                _text = f.read()
+        elif text is not None:
+            _text = text
+        else:
+            raise AssertionError('Must provide a text source.')
+        self.text = Word(_text)
         self.words = self.text.iterate(' ')
         self.word_count = len(self.words)
         self.characters = self.count_characters()

@@ -117,3 +117,12 @@ class TestTextCounter(unittest.TestCase):
         self.tc = TextCounter('Hit list')
         expected = [('i', 2), ('t', 2)]
         self.assertTrue(all(c in self.tc.most_common for c in expected))
+
+    def test_reads_words_from_a_file(self):
+        tc_from_f = TextCounter(file_path='tests/fixtures/text.txt')
+        expected = ['This', 'was', 'successful\n']
+        self.assertEqual(tc_from_f.words, expected)
+
+    def test_raises_ArgumentError_if_no_text_souce_give(self):
+        with self.assertRaises(AssertionError):
+            TextCounter()
