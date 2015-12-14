@@ -49,3 +49,12 @@ class TestNumbers(unittest.TestCase):
 
     def test_factorial(self):
         self.assertEqual(numbers.factorial(5), 120)
+
+    def test_factor(self):
+        self.assertEqual(numbers.factor(4), [1, 2, 4])
+
+    def test_find_prime_factors_returns_list_of_prime_factors(self):
+        self.assertEqual(numbers.find_prime_factors(6), [2, 3])
+
+    def test_factor_returns_none_if_no_factors(self):
+        self.assertEqual(numbers.factor(0), None)

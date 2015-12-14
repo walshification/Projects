@@ -87,3 +87,17 @@ def factorial(i):
     if i == 0:
         return 1
     return i * factorial(i-1)
+
+
+def factor(i):
+    fs = [j for j in range(1, i+1) if i % j == 0]
+    return fs if fs else None
+
+
+def find_prime_factors(i):
+    pfs = [j for j in factor(i) if is_prime(j)]
+    return pfs if pfs else None
+
+def is_prime(i):
+    """Returns a boolean if the number is prime or not."""
+    return True if len(factor(i)) == 2 else False
