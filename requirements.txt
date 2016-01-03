@@ -5,3 +5,4 @@ pep8==1.5.7
 py==1.4.30
 pyflakes==1.0.0
 pytest==2.8.3
+pudb
