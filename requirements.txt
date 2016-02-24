@@ -1,8 +1,5 @@
 coverage==4.0.3
 flake8==2.5.1
-mccabe==0.3.1
-pep8==1.5.7
-py==1.4.30
-pyflakes==1.0.0
-pytest==2.8.3
-pudb
+MacFSEvents==0.7
+pudb==2015.4.1
+sniffer==0.3.5

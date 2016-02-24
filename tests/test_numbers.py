@@ -1,6 +1,6 @@
 import unittest
 
-from lib import numbers
+from projects import numbers
 
 
 class TestNumbers(unittest.TestCase):
@@ -23,8 +23,6 @@ class TestNumbers(unittest.TestCase):
     def test_change_complains_if_not_given_enough_money(self):
         with self.assertRaises(AssertionError) as e:
             self.num_fun.change(2, 1)
-        expected = "Hey! That isn't enough!"
-        self.assertEqual(e.exception.msg, expected)
 
     def test_gimme_prime_yields_prime_numbers_from_generator(self):
         prime_num_gen = self.num_fun.gimme_prime()

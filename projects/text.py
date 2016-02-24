@@ -63,7 +63,8 @@ class Word(str):
         word = self.lower()
         if word is None or len(word) == 1:
             return True
-        return Word(word[1:-1]).is_palindrome() if word[0] == word[-1] else False
+        return (Word(word[1:-1]).is_palindrome() if word[0] == word[-1]
+                else False)
 
     def reverse(self):
         """Returns a copy of a string in reverse."""

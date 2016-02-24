@@ -1,20 +1,34 @@
 ENV = $(CURDIR)/env
+PIP = $(ENV)/bin/pip
 PYTHON = $(ENV)/bin/python
 COVERAGE = $(ENV)/bin/coverage
+SNIFFER = $(ENV)/bin/sniffer
 
 make: test
 
-test: deps
-	$(COVERAGE) run --source lib -m py.test
+test: $(COVERAGE)
+	$(COVERAGE) run -m unittest discover ./tests
 	$(COVERAGE) report -m
 
-deps: env
-	$(ENV)/bin/pip install --upgrade pip
-	$(ENV)/bin/pip install -Ur requirements.txt
+test-watch: $(SNIFFER)
+	$(SNIFFER)
 
-env:
-	virtualenv --python=$(shell which python3.4) $(ENV)
+htmlcov: $(COVERAGE)
+	$(COVERAGE) html
+
+$(SNIFFER) $(COVERAGE): $(ENV)
+	$(PIP) install -Ur requirements.txt
+	touch $@
+
+$(ENV):
+	virtualenv --python=$(shell which python3) $(ENV)
+	$(PIP) install --upgrade pip
+
+distclean:
+	rm -rf $(ENV) .coverage htmlcov __pycache__
+	find . -iname '*.pyc' -exec rm {} \;
 
 clean:
-	rm -rf $(ENV)
-	find . -iname '*.pyc' -exec rm {} \;
+	rm -rf .coverage htmlcov
+
+PHONY: test distclean clean

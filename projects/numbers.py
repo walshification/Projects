@@ -16,7 +16,7 @@ class Numbers(object):
         """Returns a dict with the change owed in number of dollars and coins
         based on a cost and payment amount.
         """
-        assert (pay - cost) > 0, "Hey! That isn't enough!"
+        assert (pay > cost), "Hey! That isn't enough!"
         purse = {1.00: 0, 0.25: 0, 0.10: 0, 0.05: 0, 0.01: 0}
         coins = [1.00, 0.25, 0.10, 0.05, 0.01]
         change = pay - cost
@@ -97,6 +97,7 @@ def factor(i):
 def find_prime_factors(i):
     pfs = [j for j in factor(i) if is_prime(j)]
     return pfs if pfs else None
+
 
 def is_prime(i):
     """Returns a boolean if the number is prime or not."""

@@ -1,6 +1,6 @@
 import unittest
 
-from lib import sci_calc
+from projects import sci_calc
 
 
 class TestArithmetic(unittest.TestCase):
