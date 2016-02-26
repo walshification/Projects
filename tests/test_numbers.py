@@ -21,7 +21,7 @@ class TestNumbers(unittest.TestCase):
         self.assertEqual(coins, expected)
 
     def test_change_complains_if_not_given_enough_money(self):
-        with self.assertRaises(AssertionError) as e:
+        with self.assertRaises(AssertionError):
             self.num_fun.change(2, 1)
 
     def test_gimme_prime_yields_prime_numbers_from_generator(self):

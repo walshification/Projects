@@ -59,7 +59,6 @@ class TestStats(unittest.TestCase):
     def test_probability(self):
         pass
 
-
     def test_matrix_calculations(self):
         pass
 
@@ -68,6 +67,7 @@ class TestStats(unittest.TestCase):
 
     def test_physical_constants(self):
         pass
+
 
 class TestUnitConversion(unittest.TestCase):
     def test_unit_conversion(self):

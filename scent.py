@@ -1,5 +1,4 @@
-from sniffer.api import *
-
+from sniffer.api import file_validator, runnable
 import termstyle
 
 
@@ -24,6 +23,7 @@ def py_files(filename):
 @runnable
 def run_tests(*args):
     import os
+    os.system('env/bin/flake8 .')
     exit_code = os.system('env/bin/coverage run -m unittest discover ./tests')
     os.system('env/bin/coverage report -m')
     return exit_code == 0
